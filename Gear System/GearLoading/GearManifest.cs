@@ -6,7 +6,7 @@ namespace NewGear.GearSystem.GearLoading {
         public abstract string Name { get; }
         public abstract string Description { get; }
         public abstract string[] Authors { get; }
-        public string[]? OriginalSources { get; }
+        public abstract string[]? OriginalSources { get; }
 
         /// <summary>
         /// The gears contained within this project. Every class not listed here will be ignored.
