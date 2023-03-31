@@ -2,8 +2,6 @@
 using NewGear.Trees.TrueTree;
 using NewGear.IO;
 using System.Text;
-using System.Reflection.Metadata;
-using System.ComponentModel;
 
 namespace NewGear.Gears.Containers;
 
@@ -191,13 +189,11 @@ static class Ext
     }
 }
 
-public class SARCMetadata : IReadableGear
+public class SARCMetadata
 {
     public Header Header = new();
     public SFAT SFAT = new();
     public SFNT SFNT = new();
-
-    public ICompressionGear? CompressionAlgorithm { get; set; }
     public ByteOrder ByteOrder { get; set; }
     public Encoding Encoding { get; set; } = Encoding.ASCII;
 
@@ -222,14 +218,13 @@ public class SARCMetadata : IReadableGear
     public SARCMetadata() { }
 }
 
-public class Header : IReadableGear
+public class Header
 {
     public ushort ChunkLen;
     public ushort Bom;
     public uint Size;
     public uint StartingOff;
     public uint Unk;
-    public ICompressionGear? CompressionAlgorithm { get; set; } = null;
     public ByteOrder ByteOrder { get; set; }
     public Encoding Encoding { get; set; } = Encoding.ASCII;
     public void Read(byte[] data)
@@ -263,13 +258,13 @@ public class Header : IReadableGear
     }
 }
 
-public class SFAT : IReadableGear
+public class SFAT
 {
     public List<Node> Nodes = new();
     public ushort ChunkSize;
     public ushort NodeCount;
     public uint HashMultiplier;
-    public class Node : IReadableGear
+    public class Node
     {
         public uint Hash;
         public bool FileBool;
@@ -277,8 +272,6 @@ public class SFAT : IReadableGear
         public ushort FileNameOffset;
         public uint NodeOffset;
         public uint EON;
-
-        public ICompressionGear? CompressionAlgorithm { get; set; }
         public ByteOrder ByteOrder { get; set; }
         public Encoding Encoding { get; set; } = Encoding.ASCII;
 
@@ -310,8 +303,6 @@ public class SFAT : IReadableGear
             return res;
         }
     }
-
-    public ICompressionGear? CompressionAlgorithm { get; set; }
     public ByteOrder ByteOrder { get; set; }
     public Encoding Encoding { get; set; } = Encoding.ASCII;
 
@@ -346,14 +337,12 @@ public class SFAT : IReadableGear
     }
 }
 
-public class SFNT : IReadableGear
+public class SFNT
 {
     public List<string> FileNames = new();
     public uint ChunkID;
     public ushort ChunkSize;
     public ushort Unknown;
-
-    public ICompressionGear? CompressionAlgorithm { get; set; }
     public ByteOrder ByteOrder { get; set; }
     public Encoding Encoding { get; set; } = Encoding.ASCII;
 
